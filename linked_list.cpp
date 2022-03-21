@@ -60,14 +60,41 @@ int LinkedList::pop() { //acting as a queue
     return popped_value;
 }
 
+// account for index <= 0
 void LinkedList::insert(int value, int index) {
-    
+    Node* new_node = new Node;
+    new_node->value = value;
+    Node* prev_node = head;
+
+    for (int i = 0; i < index-1; i++) {
+        prev_node = prev_node->next_node;
+    }
+
+    new_node->next_node = prev_node->next_node;
+    prev_node->next_node = new_node;
+}
+
+void LinkedList::remove(int index) {
+    Node* prev_node = head;
+
+    for (int i = 0; i < index-1; i++) {
+        prev_node = prev_node->next_node;
+    }
+
+    Node* node = prev_node->next_node;
+    prev_node->next_node = node->next_node;
+    delete node;
 }
 
 int main(int argc, char** argv) {
     LinkedList l;
-    l.push(5);
-    l.push(10);
-    l.push(15);
+    for (int i = 0; i < 10; i++) {
+        l.push(i*5);
+    }
+
+    l.insert(-100, 5);
+    int popped_val = l.pop();
+    l.remove(3);
+
     return 0;
 }
