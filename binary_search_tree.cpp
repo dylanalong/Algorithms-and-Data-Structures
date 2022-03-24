@@ -46,17 +46,29 @@ Node<T>* find(Node<T>* root, T data) {
 
 template <typename T>
 void in_order_traversal(Node<T>* root) {
-
+    if (root != nullptr) {
+        in_order_traversal(root->left_child);
+        std::cout << "Node: " << root->data << std::endl;
+        in_order_traversal(root->right_child);
+    }
 }
 
 template <typename T>
 void pre_order_traversal(Node<T>* root) {
-    
+    if (root != nullptr) {
+        std::cout << "Node: " << root->data << std::endl;
+        pre_order_traversal(root->left_child);
+        pre_order_traversal(root->right_child);
+    }
 }
 
 template <typename T>
 void post_order_traversal(Node<T>* root) {
-    
+    if (root != nullptr) {
+        post_order_traversal(root->left_child);
+        post_order_traversal(root->right_child);
+        std::cout << "Node: " << root->data << std::endl;
+    }
 }
 
 int main(int argc, char **argv) {
