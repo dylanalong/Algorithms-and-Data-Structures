@@ -85,6 +85,15 @@ int main(int argc, char **argv) {
     Node<int>* found_node = find(root, 14);
     found_node = find(root, 12);
 
+    // 2, 4, 5, 8, 10, 11, 12, 14, 15
+    in_order_traversal(root);
+    std::cout << std::endl;
+    // 10, 8, 4, 2, 5, 12, 11, 15, 14
+    pre_order_traversal(root);
+    std::cout << std::endl;
+    // 2, 5, 4, 8, 11, 14, 15, 12, 10
+    post_order_traversal(root);
+
     delete root;
     return 0;
 }
