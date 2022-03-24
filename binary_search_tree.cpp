@@ -17,59 +17,62 @@ class Node {
         Node* right_child;
 };
 
-template <class T>
-class BinarySearchTree {
-    public:
-        BinarySearchTree();
-        ~BinarySearchTree();
-        Node<T>* root;
-        void insert(Node<T>* node);
-        //bool search(T data);
-        //void delete_node(T data); // idk how you specify a node
-        // in order to do the above it seems like we need to traverse
-        // the graph
-        //Node<T>* in_order_traversal(T data);
-        void in_order_traversal(Node node);
-        //Node<T>* pre_order_traversal(T data);
-        //Node<T>* post_order_traversal(T data);
-};
-
-template <class T>
-BinarySearchTree<T>::BinarySearchTree() {
-    root = nullptr;
-}
-
-template <class T>
-BinarySearchTree<T>::~BinarySearchTree() {
-    delete root;
-}
-
-template <class T>
-void BinarySearchTree<T>::insert(Node<T>* node) {
+template <typename T>
+void insert(Node<T>* &root, T data) {
     if (root == nullptr) {
-        root = node;
+        Node<T>* new_node = new Node<T>(data);
+        root = new_node;
     }
     else {
-        Node<T>* curr_node
+        if (data <= root->data) {
+            insert(root->left_child, data);
+        }
+        else {
+            insert(root->right_child, data);
+        }
     }
 }
 
-template <class T>
-void BinarySearchTree<T>::in_order_traversal(Node<T> node) {
-    if (node != nullptr) {
-        in_order_traversal(node.left_node);
-        std::cout << "Node value: "<< node.data << std::endl;
-        in_order_traversal(node.right_node);
+template <typename T>
+Node<T>* find(Node<T>* root, T data) {
+    if (data < root->data){
+        return find(root->left_child, data);
     }
+    else if (data > root->data){
+        return find(root->right_child, data);
+    }
+    return root;
+}
+
+template <typename T>
+void in_order_traversal(Node<T>* root) {
+
+}
+
+template <typename T>
+void pre_order_traversal(Node<T>* root) {
+    
+}
+
+template <typename T>
+void post_order_traversal(Node<T>* root) {
+    
 }
 
 int main(int argc, char **argv) {
-    BinarySearchTree<int> tree;
-    tree.insert(5);
-    tree.insert(2);
-    tree.insert(7);
-    tree.insert(3);
-    tree.insert(1);
-    tree.insert(6);
+    Node<int>* root = new Node<int>(10);
+    insert(root, 8);
+    insert(root, 12);
+    insert(root, 4);
+    insert(root, 11);
+    insert(root, 15);
+    insert(root, 14);
+    insert(root, 5);
+    insert(root, 2);
+
+    Node<int>* found_node = find(root, 14);
+    found_node = find(root, 12);
+
+    delete root;
     return 0;
 }
