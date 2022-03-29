@@ -3,43 +3,46 @@
 
 class Node {
     public:
-        char data;
-        std::vector<char> adj_list;
+        int data;
+        bool visited = false;
+        std::vector<Node*> adj_list;
 };
+
+void depth_first_search(Node* root) {
+    if (root == nullptr) {
+        return;
+    }
+    std::cout << root->data << std::endl;
+    root->visited = true;
+    for (int i = 0; i < root->adj_list.size(); i++) {
+        if (root->adj_list.at(i)->visited == false) {
+        depth_first_search(root->adj_list.at(i));
+        }
+    }    
+}
 
 int main(int argc,char **argv) {
     std::vector<Node*> nodes;
 
     for (int i = 0; i < 7; i++) {
         Node* node = new Node;
-        node->data = 'a' + i;
+        node->data = i;
         nodes.push_back(node);
     }
 
-    // A
-    nodes.at(0)->adj_list.push_back('b');
-    nodes.at(0)->adj_list.push_back('d');
+    nodes.at(0)->adj_list.push_back(nodes.at(1));
+    nodes.at(0)->adj_list.push_back(nodes.at(4));
+    nodes.at(0)->adj_list.push_back(nodes.at(5));
 
-    // B
-    nodes.at(1)->adj_list.push_back('a');
-    nodes.at(1)->adj_list.push_back('e');
-
-    // C
-    nodes.at(2)->adj_list.push_back('f');
+    nodes.at(1)->adj_list.push_back(nodes.at(3));
+    nodes.at(1)->adj_list.push_back(nodes.at(4));
     
-    // D
-    nodes.at(3)->adj_list.push_back('a');
-    nodes.at(3)->adj_list.push_back('e');
+    nodes.at(2)->adj_list.push_back(nodes.at(1));
+    
+    nodes.at(3)->adj_list.push_back(nodes.at(2));
+    nodes.at(3)->adj_list.push_back(nodes.at(4));
 
-    // E
-    nodes.at(4)->adj_list.push_back('b');
-    nodes.at(4)->adj_list.push_back('d');
-    nodes.at(4)->adj_list.push_back('f');
-
-    // F
-    nodes.at(5)->adj_list.push_back('c');
-    nodes.at(5)->adj_list.push_back('e');
-
+    depth_first_search(nodes.at(0));
     // next implement BFS and DFS
 
     return 0;
